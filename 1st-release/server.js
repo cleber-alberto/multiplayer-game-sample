@@ -1,11 +1,11 @@
 import express from 'express'
 import http from 'http'
 import createGame from './public/game.js'
-import socketio from 'socket.io'
+import { Server } from "socket.io"
 
 const app = express()
-const server = http.createServer(app)
-const sockets = socketio(server)
+const httpServer = http.createServer(app)
+const sockets = new Server(httpServer)
 
 app.use(express.static('public'))
 
@@ -38,6 +38,6 @@ sockets.on('connection', (socket) => {
     })
 })
 
-server.listen(3000, () => {
+httpServer.listen(3000, () => {
     console.log(`> Server listening on port: 3000`)
 })
